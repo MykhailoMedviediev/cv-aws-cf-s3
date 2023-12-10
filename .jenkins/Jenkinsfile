@@ -1,0 +1,24 @@
+node {
+    stage('Checkout') {
+        checkout(scm).each { k, v -> env.setProperty(k, v) }
+        env.GIT_COMMIT_HASH = env.GIT_COMMIT.take(5)
+    }
+
+    try{
+        stage('Terraform init') {
+            withAWS(credentials: "aws-key", region: "us-east-1") {
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Terraform apply') {
+            withAWS(credentials: "aws-key", region: "us-east-1") {
+                sh 'terraform apply -auto-approve'
+            }
+        }
+    } catch (Throwable e) {
+        throw e
+    } finally {
+        cleanWs()
+    }
+}
