@@ -9,6 +9,14 @@ terraform {
   required_version = ">= 1.6.4"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "cv-tfstate-file"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
