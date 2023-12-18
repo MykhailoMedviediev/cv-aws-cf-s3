@@ -6,15 +6,11 @@ node {
 
     try{
         stage('Terraform init') {
-            withAWS(credentials: "aws-key", region: "us-east-1") {
-                sh 'terraform init'
-            }
+            sh 'terraform init'
         }
         
         stage('Terraform destroy') {
-            withAWS(credentials: "aws-key", region: "us-east-1") {
-                sh 'terraform destroy -auto-approve'
-            }
+            sh 'terraform destroy -auto-approve'
         }
     } catch (Throwable e) {
         throw e
