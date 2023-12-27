@@ -1,0 +1,8 @@
+env:
+  ecr_arn: "arn:aws:ecr:eu-west-1:2319321939:repository/2aksdk"
+  ecr_repository: "2319321939.dkr.ecr.eu-west-1.amazonaws.com/2aksdk"
+  appconfig_application_env_vars: "k23ma"
+  appconfig_environment_env_vars: "9sadm2"
+  appconfig_configuration_profile_env_vars: "lsd23m12"
+  aws_ecs_service_name: "2aksdk"
+  aws_ecs_service_cluster_name: "LSDALD"
