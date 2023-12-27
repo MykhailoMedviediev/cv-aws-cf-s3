@@ -53,7 +53,7 @@ node {
     try{
         stage('Parse yaml file') {
             def yaml = readYaml file: "cloud.yaml"
-            def createTerraformSubmap(terraformMap) {
+            def createTerraformSubmap = { terraformMap ->
                 terraformMap['terraform'] = yaml['terraform']
             }
             createTerraformSubmap(configurations.dev)
@@ -62,11 +62,11 @@ node {
             configurations.dev.terraform.each { key, value ->
                 echo "The value of dev.terraform.${key} is ${value}"
             }
-            configurations.dev.terraform.each { key, value ->
+            configurations.local.terraform.each { key, value ->
                 echo "The value of local.terraform.${key} is ${value}"
             }
 
-            echo "aws_ecs_service_name is ${configurations.dev.terraform.aws_ecs_service_name}"
+            echo "aws_ecs_service_name is ${conf.terraform.aws_ecs_service_name}"
         }
     } catch (Throwable e) {
         throw e
