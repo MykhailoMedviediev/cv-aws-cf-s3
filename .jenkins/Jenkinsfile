@@ -5,12 +5,12 @@ node {
     }
 
     try{
-        stage('Terraform init') {
-            sh 'terraform init'
-        }
-        
-        stage('Terraform apply') {
-            sh 'terraform apply -auto-approve'
+        stage('Parse yaml file') {
+            def yaml = readYAML file: "cloud.yaml"
+            yaml["env"].each {name, value ->
+                env["$name"] = value
+                echo "Setting environment variable ${key} to ${value}"
+            } 
         }
     } catch (Throwable e) {
         throw e
