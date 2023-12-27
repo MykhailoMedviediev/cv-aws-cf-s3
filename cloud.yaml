@@ -1,4 +1,4 @@
-env:
+terraform:
   ecr_arn: "arn:aws:ecr:eu-west-1:2319321939:repository/2aksdk"
   ecr_repository: "2319321939.dkr.ecr.eu-west-1.amazonaws.com/2aksdk"
   appconfig_application_env_vars: "k23ma"

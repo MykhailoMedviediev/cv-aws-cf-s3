@@ -4,13 +4,69 @@ node {
         env.GIT_COMMIT_HASH = env.GIT_COMMIT.take(5)
     }
 
+    switch(env.BRANCH_NAME) {
+    case "main":
+        buildEnv = "dev"
+        break
+    default:
+        buildEnv = "local"
+        break
+    }
+
+    def configurations = [
+        dev: [
+            stages: [
+                push: true,
+                deploy: true
+            ],
+            aws: [
+                account: '123123123',
+                region: 'eu-west-1',
+                credentials: 'mail@example.com'
+            ],
+            appConfig: [
+                application: '12k9d9a',
+                environment: '2k13d8',
+                configuration: 'dsakk231'
+            ]
+        ],
+        local: [
+            stages: [
+                push: false,
+                deploy: false
+            ],
+            aws: [
+                account: '123123123',
+                region: 'eu-west-1',
+                credentials: 'mail@example.com'
+            ],
+            appConfig: [
+                application: 'k12939',
+                environment: '123o9',
+                configuration: '213mdsa'
+            ]
+        ]
+    ]
+
+    def conf = configurations[buildEnv]
+
     try{
         stage('Parse yaml file') {
-            def yaml = readYAML file: "cloud.yaml"
-            yaml["env"].each { key, value ->
-                env[key] = value
-                echo "Setting environment variable ${key} to ${value}"
+            def yaml = readYaml file: "cloud.yaml"
+            def createTerraformSubmap(terraformMap) {
+                terraformMap['terraform'] = yaml['terraform']
             }
+            createTerraformSubmap(configurations.dev)
+            createTerraformSubmap(configurations.local)
+
+            configurations.dev.terraform.each { key, value ->
+                echo "The value of dev.terraform.${key} is ${value}"
+            }
+            configurations.dev.terraform.each { key, value ->
+                echo "The value of local.terraform.${key} is ${value}"
+            }
+
+            echo "aws_ecs_service_name is ${configurations.dev.terraform.aws_ecs_service_name}"
         }
     } catch (Throwable e) {
         throw e
