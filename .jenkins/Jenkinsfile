@@ -6,7 +6,7 @@ node {
 
     try{
         stage('Parse yaml file') {
-            def yaml = readYAML file: "cloud.yaml"
+            def yaml = readYaml file: "cloud.yaml"
             yaml["env"].each {name, value ->
                 env["$name"] = value
                 echo "Setting environment variable ${key} to ${value}"
