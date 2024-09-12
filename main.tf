@@ -5,11 +5,7 @@ terraform {
       version = "~> 5.26.0"
     }
   }
-
   required_version = ">= 1.6.4"
-}
-
-terraform {
   backend "s3" {
     bucket = "cv-tfstate-file"
     key    = "terraform.tfstate"
@@ -26,38 +22,51 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_object" "s3_object" {
-  bucket = aws_s3_bucket.bucket.id
-  key    = "index.html"
-  source = "index.html"
+  bucket       = aws_s3_bucket.bucket.id
+  key          = "index.html"
+  source       = "index.html"
   content_type = "text/html"
 }
 
-resource "aws_cloudfront_distribution" "cf_distribution" {
+resource "aws_cloudfront_cache_policy" "cache_policy" {
+  name = "example-cache-policy"
+
+  default_ttl = 3600
+  max_ttl     = 86400
+  min_ttl     = 60
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    headers_config {
+      header_behavior = "none"
+    }
+
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+  }
+}
+
+resource "aws_cloudfront_distribution" "cloudfront_distribution" {
+  origin {
+    domain_name              = aws_s3_bucket.bucket.bucket_regional_domain_name
+    origin_id                = "S3Origin"
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
+  }
   enabled             = true
   default_root_object = "index.html"
 
-  origin {
-    domain_name              = aws_s3_bucket.bucket.bucket_regional_domain_name
-    origin_id                = "my-s3-origin"
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
-  }
 
   default_cache_behavior {
-    min_ttl                = 0
-    default_ttl            = 0
-    max_ttl                = 0
-    viewer_protocol_policy = "redirect-to-https"
-
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "my-s3-origin"
+    target_origin_id = "S3Origin"
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
+    viewer_protocol_policy = "redirect-to-https"
+    cache_policy_id        = aws_cloudfront_cache_policy.cache_policy.id
   }
 
   restrictions {
@@ -72,14 +81,14 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "default" {
+resource "aws_cloudfront_origin_access_control" "oac" {
   name                              = "cloudfront OAC"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
 
-data "aws_iam_policy_document" "bucket_policy_doc" {
+data "aws_iam_policy_document" "bucket_policy_document" {
   statement {
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.bucket.arn}/*"]
@@ -90,12 +99,12 @@ data "aws_iam_policy_document" "bucket_policy_doc" {
     condition {
       test     = "StringEquals"
       variable = "aws:SourceArn"
-      values   = [aws_cloudfront_distribution.cf_distribution.arn]
+      values   = [aws_cloudfront_distribution.cloudfront_distribution.arn]
     }
   }
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.bucket.id
-  policy = data.aws_iam_policy_document.bucket_policy_doc.json
+  policy = data.aws_iam_policy_document.bucket_policy_document.json
 }
