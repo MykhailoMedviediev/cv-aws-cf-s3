@@ -5,134 +5,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mykhailo Medviediev - DevOps Engineer</title>
     <style>
+        /* Global Styles */
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            color: #444;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
         }
-
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 1em;
-            text-align: center;
-        }
-
-        section {
-            max-width: 800px;
-            margin: 2em auto;
-            padding: 1em;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
         h1, h2, h3 {
-            color: #007bff;
+            color: #2c3e50;
+            font-weight: bold;
         }
-
-        h2 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 0.5em;
-            margin-top: 1em;
-        }
-
-        h3 {
-            margin-top: 1.5em;
-        }
-
-        p {
-            margin-bottom: 1.5em;
-        }
-
-        ul {
-            list-style-type: square;
-            margin-left: 1.5em;
-            margin-bottom: 1.5em;
-        }
-
         a {
-            color: #007bff;
+            color: #3498db;
             text-decoration: none;
         }
-
         a:hover {
             text-decoration: underline;
         }
 
-        footer {
-            text-align: center;
-            padding: 1em;
-            background-color: #007bff;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        /* Layout */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        aside {
+            background-color: #eaf2f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 28px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* Lists */
+        ul {
+            list-style-type: disc; /* Change to bullets */
+            padding-left: 20px; /* Add padding to accommodate bullets */
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        /* Removed the ::before pseudo-element that added check marks */
+        
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .contact-info p {
+            margin: 0;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <header>
+
+    <div class="container">
         <h1>Mykhailo Medviediev</h1>
-        <p>DevOps Engineer</p>
-    </header>
+        
+        <div class="contact-info">
+            <p>✉️ <a href="mailto:mykhailo.medvidiev.qw@gmail.com">Email</a></p>
+            <p>🔗 <a href="https://www.linkedin.com/in/mykhailo-medviediev-55a5852a3/">LinkedIn</a></p>
+            <p>📞 Phone: +48 84689045</p>
+        </div>
 
-    <section>
-        <h2>Contacts</h2>
-        <p>✉️ Email: <a href="mailto:mykhailo.medvidiev.qw@gmail.com">mykhailo.medvidiev.qw@gmail.com</a></p>
-        <p>📞 Telegram/WhatsApp: +353 879 758 239</p>
-        <p>🔗 LinkedIn: [LinkedIn Profile]</p>
-    </section>
+        <aside>
+            <p>DevOps Engineer based in Poland, eager for new challenges. Passionate about solving complex problems, driving automation, and committed to continuous growth in the DevOps landscape.</p>
+        </aside>
 
-    <section>
-        <h2>Objective</h2>
-        <p>I am a DevOps engineer residing in the Republic of Ireland, in the city of Dublin and seeking employment as a junior specialist. I am eager to take on challenging tasks and further develop my skills in the field.</p>
-    </section>
+        <div class="section">
+            <h2>Experience</h2>
+            <h3>DevOps Engineer</h3>
+            <p><strong>NDA</strong> - <em>(Jan 2023 - Present)</em></p>
+            <p>Team size: ~40 Engineers</p>
+            <p>DevOps Engineer for a constantly growing product company. Responsible for maintaining the current production environment and developing new infrastructure to satisfy constantly growing customer demands.</p>
+            <ul>
+                <li>Provisioning infrastructure using CDK and Terraform as IaC.</li>
+                <li>Preparing CI/CD pipelines for the projects using Jenkins.</li>
+                <li>Scale/Manage self-hosted Jenkins.</li>
+                <li>Maintain and Scale existing infrastructure.</li>
+                <li>Writing and Maintaining Infrastructure related documentation.</li>
+                <li>Implementing monitoring and performance management with CloudWatch and DataDog.</li>
+            </ul>
+        </div>
 
-    <section>
-        <h2>Experience</h2>
-        <p>Over the past 11 months, I have been involved in project, contributing as a junior DevOps.</p>
-        <ul>
-            <li>Writing Jenkins pipelines</li>
-            <li>Provision infrastructure using CDK with TypeScript</li>
-            <li>Premature Storage Increase for AWS EC2 Instances</li>
-            <li>Launching instances, install and configure on it php, mysql and nginx</li>
-            <li>Implement Monitoring and Performance Management by CloudWatch (metrics, alets, etc)</li>
-            <li>Write nginx configs and renew SSL certificates</li>
-        </ul>
-    </section>
+        <div class="section">
+            <h2>Education</h2>
+            <aside>
+                <p><strong>Kyiv National Economic University - Kyiv College of Information Systems and Technologies</strong> | 2020 - 2023</p>
+                <p>Bachelor’s Degree in Systems Administration (Incomplete)</p>
+            </aside>
+        </div>
 
-    <section>
-        <h2>Education</h2>
-        <p>Bachelor’s degree in Systems Administrations (Incomplete)</p>
-        <p>KNEU Kyiv College of Information Systems and Technologies 2020 - 2023</p>
-        <p>Note: Took an academic leave and transitioned to a career in DevOps</p>
-    </section>
+        <div class="section">
+            <h2>Technical Skills</h2>
+            <ul>
+                <li><strong>Cloud Platforms:</strong> AWS (EC2, ECS, ALB, ECR, CloudFront, S3, etc)</li>
+                <li><strong>Scripting:</strong> Bash</li>
+                <li><strong>Containerization:</strong> Docker</li>
+                <li><strong>Web Servers:</strong> Nginx</li>
+                <li><strong>CI/CD:</strong> Jenkins</li>
+                <li><strong>Infrastructure as Code:</strong> AWS CDK (TypeScript), Terraform</li>
+                <li><strong>Version Control:</strong> Git</li>
+                <li>Jira</li>
+            </ul>
+        </div>
+    </div>
 
-    <section>
-        <h2>Hard Skills</h2>
-        <ul>
-            <li>Setting up and managing AWS resources, including EC2, ECS, ALB, ECR, Cloud Watch, S3 buckets, Cloud Formation, and VPC</li>
-            <li>Writing bash scripts</li>
-            <li>Docker for containerization and Docker Compose for container orchestration.</li>
-            <li>Configuring and optimizing nginx for load balancing and reverse proxy setup.</li>
-            <li>Configurations for web application and installing php extensions</li>
-            <li>Jenkins for CI/CD pipelines, both declarative and scripted Jenkinsfiles.</li>
-            <li>Git for version control and repository management.</li>
-            <li>Provision Infrastructure as Code using CDK(TypeScript) or Terraform</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>Languages</h2>
-        <p>Intermediate English, Ukrainian, Russian</p>
-    </section>
-
-    <footer>
-        &copy; 2023 Mykhailo Medviediev
-    </footer>
 </body>
 </html>
